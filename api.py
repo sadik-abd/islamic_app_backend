@@ -21,7 +21,9 @@ class ChatroomResponse(BaseModel):
 chatrooms: Dict[str, List[Dict[str, str]]] = {}
 shayekh_model = ShayekhModel()
 faiss_db = load_faiss_db("faiss_index2")
-
+@app.get("/")
+async def homepange():
+    return {"message":"app runs fine"}
 @app.post("/chatrooms/", response_model=str)
 async def create_chatroom():
     chatroom_id = str(uuid4())
