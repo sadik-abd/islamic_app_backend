@@ -15,6 +15,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-RUN cd faiss_index2 
+RUN cd faiss_index2 && wget https://github.com/sadik-abd/islamic_app_backend/releases/download/v1/index.faiss
 # Set the entrypoint for your application
 CMD ["python" ,"api.py"]
