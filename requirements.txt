@@ -1,0 +1,11 @@
+langchain-google-genai==2.0.7
+langchain-community==0.3.8
+google-generativeai==0.6.10
+soundfile
+transformers==4.46.1
+scipy
+numpy
+torch==2.5.1
+fastapi
+pydantic
+faiss-cpu==1.9.0.post1

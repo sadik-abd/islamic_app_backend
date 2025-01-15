@@ -1,0 +1,1 @@
+HADEES_KEY = "$2y$10$W9JWagv5xv3h7yFyNkCMubI1C7daYiZKDuXliCNSrshvlVI9wBYi"
