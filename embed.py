@@ -6,7 +6,7 @@ from langchain.schema import Document
 from tqdm import tqdm
 import json
 # Initialize the embedding model
-SECRET_KEY = os.environ("GOOGLE_GEMINI_API") 
+SECRET_KEY = os.environ["GOOGLE_GEMINI_API"] 
 embedding_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=SECRET_KEY)
 
 # Path to root directory containing folders with CSV files

@@ -10,7 +10,7 @@ import numpy as np
 import torch
 import json
 import os
-SECRET_KEY = os.environ("GOOGLE_GEMINI_API") 
+SECRET_KEY = os.environ["GOOGLE_GEMINI_API"] 
 genai.configure(api_key=SECRET_KEY)
 # Define the GeminiModel class
 def format_chat_history(chat_history):
