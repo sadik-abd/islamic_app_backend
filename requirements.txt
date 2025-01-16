@@ -9,3 +9,4 @@ torch==2.5.1
 fastapi
 pydantic
 faiss-cpu==1.9.0.post1
+python-multipart==0.0.17

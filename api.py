@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, Header, Depends
 from fastapi.responses import JSONResponse
 import os
 import tempfile
@@ -8,7 +8,7 @@ from uuid import uuid4
 from llm import *
 # FastAPI setup
 app = FastAPI()
-
+SECRET_KEY = "kuttar_Baccha"
 # Models for API requests
 class Message(BaseModel):
     query: str
@@ -16,22 +16,25 @@ class Message(BaseModel):
 class ChatroomResponse(BaseModel):
     response: str
     reference: List[str]
-
+def verify_secret_key(x_secret_key: str = Header(...)):
+    if x_secret_key != SECRET_KEY:
+        raise HTTPException(status_code=401, detail="Unauthorized")
+    return "succsex"
 # In-memory storage for chatrooms
 chatrooms: Dict[str, List[Dict[str, str]]] = {}
 shayekh_model = ShayekhModel()
 faiss_db = load_faiss_db("faiss_index2")
 @app.get("/")
-async def homepange():
+async def homepange(secret_key=Depends(verify_secret_key)):
     return {"message":"app runs fine"}
 @app.post("/chatrooms/", response_model=str)
-async def create_chatroom():
+async def create_chatroom(secret_key=Depends(verify_secret_key)):
     chatroom_id = str(uuid4())
     chatrooms[chatroom_id] = [("user",shayekh_model.prompt)]
     return chatroom_id
 
 @app.post("/chatrooms/{chatroom_id}/message", response_model=ChatroomResponse)
-async def send_message(chatroom_id: str, message: Message):
+async def send_message(chatroom_id: str, message: Message, secret_key=Depends(verify_secret_key)):
     if chatroom_id not in chatrooms:
         raise HTTPException(status_code=404, detail="Chatroom not found")
 
@@ -47,7 +50,7 @@ async def send_message(chatroom_id: str, message: Message):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/transcribe")
-async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(...)) -> Dict[str, str]:
+async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(...), secret_key=Depends(verify_secret_key)) -> Dict[str, str]:
     """
     Endpoint to transcribe speech from an uploaded audio file.
     
