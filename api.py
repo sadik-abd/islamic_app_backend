@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, Header, Depends
 from fastapi.responses import JSONResponse
 import os
-import uvicorn
 import tempfile
 from pydantic import BaseModel
 from typing import List, Dict
@@ -61,8 +60,6 @@ async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(..
     Returns:
         Dict[str, str]: The transcribed text.
     """
-    if not file.content_type.startswith("audio/"):
-        raise HTTPException(status_code=400, detail="Invalid file type. Please upload an audio file.")
 
     try:
         # Save the uploaded file temporarily
@@ -83,4 +80,5 @@ async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(..
             os.remove(temp_audio_path)
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run(app)
