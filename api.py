@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from typing import List, Dict
 from uuid import uuid4
 from llm import *
+import uvicorn
 # FastAPI setup
 app = FastAPI()
 SECRET_KEY = "kuttar_Baccha"
@@ -86,5 +87,4 @@ async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(..
             os.remove(temp_audio_path)
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app)
