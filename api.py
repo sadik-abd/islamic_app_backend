@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException, Depends, UploadFile, File, Form, Header, Depends
 from fastapi.responses import JSONResponse
 import os
+import uvicorn
 import tempfile
 from pydantic import BaseModel
 from typing import List, Dict
 from uuid import uuid4
 from llm import *
-import uvicorn
 # FastAPI setup
 app = FastAPI()
 SECRET_KEY = "kuttar_Baccha"
@@ -51,7 +51,7 @@ async def send_message(chatroom_id: str, message: Message, secret_key=Depends(ve
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/transcribe")
-async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(...), secret_key=Depends(verify_secret_key)) -> Dict[str, str]:
+async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(...), secret_key=Depends(verify_secret_key)):
     """
     Endpoint to transcribe speech from an uploaded audio file.
     
@@ -72,11 +72,7 @@ async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(..
 
         # Perform inference
         transcription = process_speech(temp_audio_path, ref_txt)
-
-        # Extract text from the model output
-        detected_text = transcription.get("text", "")
-
-        return detected_text
+        return transcription
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during transcription: {str(e)}")
