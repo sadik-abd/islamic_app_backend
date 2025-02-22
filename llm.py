@@ -138,8 +138,9 @@ class SpeechModel:
 
         return transcription, []
 
-whisper_model = SpeechModel()
+
 def process_speech(audio_path, ref_txt):
+    whisper_model = SpeechModel()
     mdl = GeminiModel()
     recognized_text,_ = whisper_model.predict({"array":downsample_audio(audio_path,16000)[0]})
     text, money = mdl.predict_plain(f"""we have 2 arabic texts one is reference text and one is text detected by speech recognition. now return data in json format. it should contain following info. your output format should be like this. 
