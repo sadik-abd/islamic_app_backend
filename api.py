@@ -8,7 +8,7 @@ from uuid import uuid4
 from llm import *
 # FastAPI setup
 app = FastAPI()
-SECRET_KEY = "kuttar_Baccha"
+SECRET_KEY = os.environ.get("SECRET_KEY_APP")
 # Models for API requests
 class Message(BaseModel):
     query: str

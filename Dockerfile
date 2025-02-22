@@ -1,5 +1,5 @@
 # Use a base image with Python 3.10
-FROM python:3.10
+FROM python:3.10-slim
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -17,4 +17,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 RUN cd faiss_index2 && wget https://github.com/sadik-abd/islamic_app_backend/releases/download/v1/index.faiss
 # Set the entrypoint for your application
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python" ,"api.py"]

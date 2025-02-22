@@ -42,7 +42,7 @@ class ShayekhModel:
     def __init__(self) -> None:
         self.prompt = """You are a intelligent chatbot who helps people helps people learn about islam. Or find relevant islamic hadiths or quran ayahs. You will answer their question. you will help them learn more. with your every response you should have a quran ayah or a hadith referenced. use the hadith context if it's related to user question. Context maybe in English. But your response must be in user query's language. if user query is in english please respond in english.
     """
-        self.model = genai.GenerativeModel('gemini-1.5-pro-latest')
+        self.model = genai.GenerativeModel('gemini-2.0-flash')
     def predict_plain(self, inp):
         response = self.model.generate_content(inp)
         
