@@ -8,7 +8,7 @@ from uuid import uuid4
 from llm import *
 # FastAPI setup
 app = FastAPI()
-SECRET_KEY = "aoiugfhnds9u8ghndsu80gn"
+SECRET_KEY = os.environ.get("SECRET_KEY_APP")
 # Models for API requests
 class Message(BaseModel):
     query: str
@@ -81,4 +81,4 @@ async def transcribe_audio(file: UploadFile = File(...), ref_txt : str = Form(..
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0")
+    uvicorn.run(app,host="0.0.0.0")
